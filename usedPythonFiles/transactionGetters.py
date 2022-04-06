@@ -34,7 +34,7 @@ def transactionGetterByHash(data):
                 result = i['result']
                 if 'maxPriorityFeePerGas' and 'maxFeePerGas' in result:
                     print(i["result"]["hash"], int(time()*1000))
-                    writer.writerow([result['hash'],result['from'],result['gas'],result['gasPrice'],result['maxFeePerGas'],result['maxPriorityFeePerGas'],int(time()*1000)])
+                    writer.writerow([result['hash'],result['from'],int(result['gas'],16),result['gasPrice'],result['maxFeePerGas'],result['maxPriorityFeePerGas'],int(time()*1000)])
 
 def loopWhile():
 

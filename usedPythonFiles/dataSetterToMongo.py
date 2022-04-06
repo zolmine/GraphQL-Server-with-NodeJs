@@ -1,16 +1,21 @@
-import pandas as pd
+import csv
 from pymongo import MongoClient
-import json
 
-def mongoimport(csv_path, db_name, coll_name, db_url='localhost', db_port=27000):
-    """ Imports a csv file at path csv_name to a mongo colection
-    returns: count of the documants in the new collection
-    """
-    client = MongoClient(db_url, db_port)
-    db = client[db_name]
-    coll = db[coll_name]
-    data = pd.read_csv(csv_path)
-    payload = json.loads(data.to_json(orient='records'))
-    coll.remove()
-    coll.insert(payload)
-    return coll.count()
+client = MongoClient('localhost', 27017)
+db = client.polygonTransactions
+db.segment.drop()
+collect = client.pendingTransactions
+
+header = [ "hash", "to", "gas","gasPrice","gasFee","gasFeePerGas","time"]
+csvfile = open('data.csv', 'r')
+reader = csv.DictReader( csvfile )
+
+for each in reader:
+    row={}
+    for field in header:
+        row[field]=each[field]
+        
+    print (row)
+    db.segment.insert(row)
+    
+# test = mongoimport("data.csv","polygonTransactions","pendingTransactions")
