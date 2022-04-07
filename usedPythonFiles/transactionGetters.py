@@ -1,4 +1,4 @@
-import csv
+
 from time import time
 from websocket import create_connection
 from orjson import loads,dumps
@@ -19,8 +19,8 @@ filtre = {"jsonrpc":"2.0","id": 0,"method": "eth_getFilterChanges","params": [fi
 
 json_filtre = str(dumps(filtre), "utf-8")
 
-file = open("data.csv","w",newline='')
-writer = csv.writer(file,delimiter=' ',quotechar='|', quoting=csv.QUOTE_MINIMAL)
+# file = open("data.csv","w",newline='')
+# writer = csv.writer(file,delimiter=' ',quotechar='|', quoting=csv.QUOTE_MINIMAL)
 def transactionGetterByHash(data):
 
         array = []
@@ -29,14 +29,14 @@ def transactionGetterByHash(data):
 
         ws1.send(str(dumps(array), "utf-8"))
         data = loads(ws1.recv())
-        
+
         for i in data:
             if i["result"] != None:
                 result = i['result']
                 if 'maxPriorityFeePerGas' and 'maxFeePerGas' in result:
-                    print(i["result"]["hash"], int(time()*1000))
-                    
-                    mongoDb({"hash":result['hash'],"toAdd":result['from'],"gas":int(result['gas'],16),"gasPrice":result['gasPrice'],"maxFeePerGas":result['maxFeePerGas'],"maxPriorityFeePerGas":result['maxPriorityFeePerGas'],"timing":int(time()*1000)})
+                    mongoDb({"hash":result['hash'],"toAdd":result['from'],"gas":int(result['gas'],16),"gasPrice":int(result['gasPrice'],16),"maxFeePerGas":int(result['maxFeePerGas'],16),"maxPriorityFeePerGas":int(result['maxPriorityFeePerGas'],16),"timing":int(time()*1000)})
+                    # print(i["result"]["hash"], int(time()*1000))
+                    print('data sent')
 
 def loopWhile():
     while True:

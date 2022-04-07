@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const pendingTransactios = new mongoose.Schema({
+const pendingTransactionsSchema = new mongoose.Schema({
     hash: {
         type: String,
         },
-    toAddress: {
+    toAdd: {
         type: String,
     },
     gas:{
@@ -24,5 +24,4 @@ const pendingTransactios = new mongoose.Schema({
     },
 },{timestamps:true});
 
-const Categorie = mongoose.model("pendingTransactios", pendingTransactios);
-module.exports = Categorie;
+module.exports = mongoose.model('pendingTransactions', pendingTransactionsSchema);
