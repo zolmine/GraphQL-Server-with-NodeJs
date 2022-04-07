@@ -4,7 +4,9 @@ const { buildSchema } = require('graphql');
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
-    https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2
+  type Query {
+    hello: String
+  }
 `);
 
 // The root provides a resolver function for each API endpoint

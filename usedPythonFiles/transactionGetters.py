@@ -3,6 +3,7 @@ from time import time
 from websocket import create_connection
 from orjson import loads,dumps
 from concurrent.futures import ThreadPoolExecutor
+from dataSetterToMongo import mongoDb
 url = "wss://polygon-mainnet.g.alchemy.com/v2/p0Tqunv8aWA94L7Lqc_AKKJy0XDvlJV2"
 
 filtre1 = {"jsonrpc":"2.0","method":"eth_newPendingTransactionFilter","params":[],"id":1}
@@ -34,18 +35,14 @@ def transactionGetterByHash(data):
                 result = i['result']
                 if 'maxPriorityFeePerGas' and 'maxFeePerGas' in result:
                     print(i["result"]["hash"], int(time()*1000))
-                    writer.writerow([result['hash'],result['from'],int(result['gas'],16),result['gasPrice'],result['maxFeePerGas'],result['maxPriorityFeePerGas'],int(time()*1000)])
+                    
+                    mongoDb({"hash":result['hash'],"toAdd":result['from'],"gas":int(result['gas'],16),"gasPrice":result['gasPrice'],"maxFeePerGas":result['maxFeePerGas'],"maxPriorityFeePerGas":result['maxPriorityFeePerGas'],"timing":int(time()*1000)})
 
 def loopWhile():
-
     while True:
             ws.send(json_filtre)
             data = loads(ws.recv())
             if data ["result"]:
                 ThreadPoolExecutor().submit(transactionGetterByHash,data)
 
-
-
-# writer.writerow(['Spam'] * 5 + ['Baked Beans'])
-# writer.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
 loopWhile()
