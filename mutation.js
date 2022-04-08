@@ -1,6 +1,6 @@
 const {
     pendingUtils
-} = require('../db')
+} = require('./db/')
 
 const mutation = {
     addTransaction: async ({
