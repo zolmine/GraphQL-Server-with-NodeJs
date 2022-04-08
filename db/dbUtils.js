@@ -1,4 +1,4 @@
-const transactionSchema = require('./Transactions');
+const transactionSchema = require('../schema/schema');
 
 const getAllTransactions = async (limit) => {
     return await transactionSchema.find({}).limit(limit);

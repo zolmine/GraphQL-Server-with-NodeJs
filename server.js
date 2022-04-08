@@ -1,10 +1,9 @@
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
-const { buildSchema } = require('graphql');
-// const mongoose = require('mongoose');
+const { query } = require('./schema/query')
+const { mutation } = require('./schema/mutation')
 
-// Construct a schema, using GraphQL schema language
-const schema = require('./schema/schema')
+const schema = require('./schema/schema');
 const { db } = require('./db');
 db.once('open', () => {
     console.log('Connected to MongoDB');
@@ -15,19 +14,15 @@ db.on('error', (err) => {
     process.exit(1);
 });
 
-// The root provides a resolver function for each API endpoint
-const root = {
-  hello: () => {
-    return 'Hello world!';
-  },
-};
-
-
+const resolvers = {
+  query,
+  mutation
+}
 
 const app = express();
 app.use('/graphql', graphqlHTTP({
   schema: schema,
-  rootValue: root,
+  rootValue: resolvers,
   graphiql: true,
 }));
 

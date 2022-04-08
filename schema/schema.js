@@ -1,6 +1,6 @@
 const graphql = require('graphql');
 
-const pendingTransactions = require('./Transactions');
+// const pendingTransactions = require('./Transactions');
  
 const {
     GraphQLObjectType, GraphQLString,

@@ -25,5 +25,5 @@ const transactionSchema = new Schema({
 },{timestamps:true});
 
 
-module.exports = new model('Transaction', transactionSchema);
+module.exports = new model('pendingTransaction', transactionSchema);
 
