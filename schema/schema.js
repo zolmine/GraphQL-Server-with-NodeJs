@@ -30,5 +30,5 @@ const pending = new GraphQLObjectType({
 //Creating a new GraphQL Schema, with options query which defines query
 //we will allow users to use it when they are making requests.
 module.exports = new GraphQLSchema({
-   query: RootQuery
+   query: pending
 });

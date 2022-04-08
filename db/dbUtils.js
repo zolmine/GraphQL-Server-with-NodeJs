@@ -8,12 +8,12 @@ const getTransactionById = async (id) => {
     return await transactionSchema.findById(id);
 }
 
-const createTransaction = async ({ title, description, author }) => {
-    return await BookModel.create({ title, description, author });
+const createTransaction = async ({ hash, toAdd, gas, gasPrice, maxFeePerGas, maxPriorityFeePerGas,time }) => {
+    return await BookModel.create({ hash, toAdd, gas, gasPrice, maxFeePerGas, maxPriorityFeePerGas,time });
 }
 
 module.exports = {
     getAllTransactions,
     getTransactionById,
-
+    createTransaction,
 }

@@ -1,15 +1,15 @@
 // const booksData = require('./data')
-const { pending} = require('../db/')
+const { pendingUtils} = require('../db/')
 
 const query = {
     books: async ({limit}, context) => {
         // return limit ? booksData.slice(0, limit) : booksData;
-        return await books.getAllBooks(limit)
+        return await pendingUtils.getAllTransactions(limit)
     },
 
     book: async ({id}, context) => {
         // return booksData.find(book => book.id === id);
-        return await books.getBookById(id)
+        return await pendingUtils.getTransactionById(id)
     }
 };
 

@@ -1,10 +1,15 @@
-
-const { pending } = require('../db')
+const {
+    pendingUtils
+} = require('../db')
 
 const mutation = {
-    addTransaction: async ({ title, author, description }, context) => {
+    addTransaction: async ({
+        hash, toAdd, gas, gasPrice, maxFeePerGas, maxPriorityFeePerGas,time
+    }, context) => {
         try {
-            const transaction = await pending.createBook({ title, author, description })
+            const transaction = await pendingUtils.createTransaction({
+                hash, toAdd, gas, gasPrice, maxFeePerGas, maxPriorityFeePerGas,time
+            })
             // const book = { id: `${books.length+1}`, title, author, description }
             // books.push(book)
             return {
@@ -21,12 +26,14 @@ const mutation = {
         }
     },
 
-   
-    deleteTransaction: async ({ id }, context) => {
+
+    deleteTransaction: async ({
+        id
+    }, context) => {
         // const book = books.find(book => book.id === id)
         // books = books.filter(book => book.id !== id)
         try {
-            const transaction = await pending.deleteBook(id)
+            const transaction = await pendingUtils.deleteTransaction(id)
             if (!transaction) {
                 return {
                     data: null,
@@ -39,8 +46,7 @@ const mutation = {
                 ok: true,
                 error: ''
             };
-        }
-        catch (error) {
+        } catch (error) {
             return {
                 data: null,
                 ok: false,
