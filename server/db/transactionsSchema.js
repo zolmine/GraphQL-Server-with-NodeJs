@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require("mongoose");
 
-const transactionSchema = new Schema({
+const pendingTransactionsSchema = new mongoose.Schema({
     hash: {
         type: String,
         },
@@ -24,6 +24,4 @@ const transactionSchema = new Schema({
     },
 },{timestamps:true});
 
-
-module.exports = new model('pendingTransaction', transactionSchema);
-
+module.exports = mongoose.model('Transactions', pendingTransactionsSchema);
